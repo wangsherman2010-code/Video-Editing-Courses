@@ -170,7 +170,7 @@
     }
 
     body.view-phone .mobile-drawer-panel {
-      display: block;
+      display: grid !important; /* Keep grid so accordion height animation still works */
     }
 
     /* Simulated PC Viewport Mode */
@@ -1526,11 +1526,40 @@
       currentAccent = name;
       const t = ACCENTS[name] || ACCENTS.terracotta;
       const isDark = document.documentElement.classList.contains("dark");
+      const h = t.hex;
+      const hover = isDark ? t.hoverDark : t.hoverLight;
+
+      // Update CSS custom properties (used by custom CSS rules)
       const root = document.documentElement;
-      root.style.setProperty("--accent", t.hex);
-      root.style.setProperty("--accent-hover", isDark ? t.hoverDark : t.hoverLight);
-      root.style.setProperty("--accent-soft", hexToRgba(t.hex, isDark ? 0.18 : 0.14));
-      root.style.setProperty("--accent-border", hexToRgba(t.hex, isDark ? 0.45 : 0.42));
+      root.style.setProperty("--accent", h);
+      root.style.setProperty("--accent-hover", hover);
+      root.style.setProperty("--accent-soft", hexToRgba(h, isDark ? 0.18 : 0.14));
+      root.style.setProperty("--accent-border", hexToRgba(h, isDark ? 0.45 : 0.42));
+
+      // Override Tailwind's hardcoded bg-[#D18B5D] / text-[#D18B5D] etc. classes
+      // Tailwind CDN bakes hex values into class names, so we must inject CSS to override them.
+      let dynStyle = document.getElementById("accent-dyn");
+      if (!dynStyle) {
+        dynStyle = document.createElement("style");
+        dynStyle.id = "accent-dyn";
+        document.head.appendChild(dynStyle);
+      }
+      dynStyle.textContent = `
+        .bg-\\[\\#D18B5D\\]                   { background-color: ${h} !important; }
+        .text-\\[\\#D18B5D\\]                 { color: ${h} !important; }
+        .border-\\[\\#D18B5D\\]               { border-color: ${h} !important; }
+        .hover\\:bg-\\[\\#DE9E73\\]:hover     { background-color: ${hover} !important; }
+        .hover\\:border-\\[\\#D18B5D\\]:hover { border-color: ${h} !important; }
+        .focus\\:ring-\\[\\#D18B5D\\]:focus   { --tw-ring-color: ${h} !important; }
+        .bg-\\[\\#D18B5D\\]\\/20              { background-color: ${hexToRgba(h,0.20)} !important; }
+        .bg-\\[\\#D18B5D\\]\\/12              { background-color: ${hexToRgba(h,0.12)} !important; }
+        .bg-\\[\\#D18B5D\\]\\/30              { background-color: ${hexToRgba(h,0.30)} !important; }
+        .border-\\[\\#D18B5D\\]\\/40          { border-color: ${hexToRgba(h,0.40)} !important; }
+        .border-\\[\\#D18B5D\\]\\/45          { border-color: ${hexToRgba(h,0.45)} !important; }
+        .selection\\:bg-\\[\\#D18B5D\\]\\/30 *::selection { background-color: ${hexToRgba(h,0.30)} !important; }
+        .accent-border-override              { border-color: ${h} !important; }
+      `;
+
       document.querySelectorAll(".color-swatch").forEach(s => {
         s.classList.toggle("swatch-active", s.getAttribute("data-accent") === name);
       });
