@@ -250,6 +250,10 @@
       box-shadow: 0 0 0 1.5px rgba(255,255,255,0.4);
       transform: scale(1.2);
     }
+    .color-swatch[data-accent="white"].swatch-active {
+      border-color: #888 !important;
+      box-shadow: 0 0 0 1.5px rgba(0,0,0,0.25) !important;
+    }
   </style>
 </head>
 <body class="min-h-screen antialiased selection:bg-[#D18B5D]/30">
@@ -319,11 +323,11 @@
               <!-- Accent Color Swatches -->
               <div class="flex items-center gap-1.5 header-control border rounded-lg px-2.5 py-1.5">
                 <span class="text-[10px] font-semibold text-slate-300 mr-0.5">Color</span>
-                <button type="button" class="color-swatch" data-accent="terracotta" style="background:#D18B5D" title="Terracotta"></button>
-                <button type="button" class="color-swatch" data-accent="ocean"      style="background:#5D9BD1" title="Ocean Blue"></button>
-                <button type="button" class="color-swatch" data-accent="forest"     style="background:#5DB87E" title="Forest Green"></button>
-                <button type="button" class="color-swatch" data-accent="amethyst"   style="background:#9B5DD1" title="Amethyst"></button>
-                <button type="button" class="color-swatch" data-accent="crimson"    style="background:#D15D5D" title="Crimson"></button>
+                <button type="button" class="color-swatch" data-accent="warm"  style="background:#C98255" title="Warm"></button>
+                <button type="button" class="color-swatch" data-accent="amber" style="background:#D5A64A" title="Amber"></button>
+                <button type="button" class="color-swatch" data-accent="sand"  style="background:#D6BFA0" title="Sand"></button>
+                <button type="button" class="color-swatch" data-accent="olive" style="background:#A9A66D" title="Olive"></button>
+                <button type="button" class="color-swatch" data-accent="white" style="background:#FFFFFF;outline:1.5px solid rgba(180,180,180,0.5);outline-offset:-1.5px" title="White"></button>
               </div>
             </div>
 
@@ -428,11 +432,11 @@
             <!-- Accent Color Swatches -->
             <div class="flex items-center gap-1.5 header-control border rounded-xl px-2.5 py-1.5">
               <span class="text-[10px] font-semibold text-slate-300 mr-0.5 select-none">Color</span>
-              <button type="button" class="color-swatch" data-accent="terracotta" style="background:#D18B5D" title="Terracotta"></button>
-              <button type="button" class="color-swatch" data-accent="ocean"      style="background:#5D9BD1" title="Ocean Blue"></button>
-              <button type="button" class="color-swatch" data-accent="forest"     style="background:#5DB87E" title="Forest Green"></button>
-              <button type="button" class="color-swatch" data-accent="amethyst"   style="background:#9B5DD1" title="Amethyst"></button>
-              <button type="button" class="color-swatch" data-accent="crimson"    style="background:#D15D5D" title="Crimson"></button>
+              <button type="button" class="color-swatch" data-accent="warm"  style="background:#C98255" title="Warm"></button>
+              <button type="button" class="color-swatch" data-accent="amber" style="background:#D5A64A" title="Amber"></button>
+              <button type="button" class="color-swatch" data-accent="sand"  style="background:#D6BFA0" title="Sand"></button>
+              <button type="button" class="color-swatch" data-accent="olive" style="background:#A9A66D" title="Olive"></button>
+              <button type="button" class="color-swatch" data-accent="white" style="background:#FFFFFF;outline:1.5px solid rgba(180,180,180,0.5);outline-offset:-1.5px" title="White"></button>
             </div>
           </div>
         </div>
@@ -1504,15 +1508,18 @@
 
     // ── Accent Color Themes ────────────────────────────────────────────────────
     const ACCENTS = {
-      terracotta: { hex: "#D18B5D", hoverLight: "#BA7446", hoverDark: "#DE9E73" },
-      ocean:      { hex: "#5D9BD1", hoverLight: "#4A85B8", hoverDark: "#73AFDE" },
-      forest:     { hex: "#5DB87E", hoverLight: "#4A9E68", hoverDark: "#73C990" },
-      amethyst:   { hex: "#9B5DD1", hoverLight: "#8249B8", hoverDark: "#AF73DE" },
-      crimson:    { hex: "#D15D5D", hoverLight: "#B84A4A", hoverDark: "#DE7373" },
+      warm:  { hex: "#C98255", hoverLight: "#AD6A3C", hoverDark: "#D99470" },
+      amber: { hex: "#D5A64A", hoverLight: "#B88A2E", hoverDark: "#E3BB65" },
+      sand:  { hex: "#D6BFA0", hoverLight: "#BCA282", hoverDark: "#E8D3BA" },
+      olive: { hex: "#A9A66D", hoverLight: "#8D8A52", hoverDark: "#BEBB88" },
+      white: { hex: "#FFFFFF", hoverLight: "#D8D8D8", hoverDark: "#F0F0F0" },
     };
 
     let currentAccent = (() => {
-      try { return localStorage.getItem("ite-guide-accent") || "terracotta"; } catch(e) { return "terracotta"; }
+      try {
+        const saved = localStorage.getItem("ite-guide-accent");
+        return (saved && ACCENTS[saved]) ? saved : "warm";
+      } catch(e) { return "warm"; }
     })();
 
     function hexToRgba(hex, alpha) {
@@ -1524,7 +1531,7 @@
 
     function applyColorTheme(name) {
       currentAccent = name;
-      const t = ACCENTS[name] || ACCENTS.terracotta;
+      const t = ACCENTS[name] || ACCENTS.warm;
       const isDark = document.documentElement.classList.contains("dark");
       const h = t.hex;
       const hover = isDark ? t.hoverDark : t.hoverLight;
@@ -1540,15 +1547,17 @@
       root.style.setProperty("--accent-soft", `rgba(${r},${g},${b},${isDark ? 0.18 : 0.14})`);
       root.style.setProperty("--accent-border", `rgba(${r},${g},${b},${isDark ? 0.45 : 0.42})`);
 
-      // Build an override <style> that uses [class~="..."] attribute selectors.
-      // These match Tailwind's hardcoded class names without needing CSS escaping,
-      // and reference var(--accent) so they automatically track the inline property above.
-      // We always re-appendChild to guarantee this style lands AFTER any Tailwind re-injection.
+      // Build an override <style> using [class~="..."] attribute selectors.
+      // These match Tailwind's hardcoded class names without CSS escaping,
+      // and use var(--accent) so they track the inline property above.
+      // We always re-appendChild so this style is LAST in <head>, after any Tailwind re-injection.
       let dynStyle = document.getElementById("accent-dyn");
       if (!dynStyle) {
         dynStyle = document.createElement("style");
         dynStyle.id = "accent-dyn";
       }
+      // For white accent, pill text must stay dark so it's readable
+      const pillTextColor = (name === "white") ? "#29465B" : "#14222D";
       dynStyle.textContent = `
         [class~="bg-[#D18B5D]"]             { background-color: var(--accent) !important; }
         [class~="text-[#D18B5D]"]           { color: var(--accent) !important; }
@@ -1562,7 +1571,7 @@
         [class~="border-[#D18B5D]/40"]      { border-color: rgba(var(--accent-rgb),0.40) !important; }
         [class~="border-[#D18B5D]/45"]      { border-color: rgba(var(--accent-rgb),0.45) !important; }
         [class~="selection:bg-[#D18B5D]/30"] *::selection { background-color: rgba(var(--accent-rgb),0.30) !important; }
-        .pill-active { background-color: var(--accent) !important; border-color: var(--accent) !important; }
+        .pill-active { background-color: var(--accent) !important; border-color: var(--accent) !important; color: ${pillTextColor} !important; }
       `;
       // Always append last so this style wins over any later Tailwind re-injections
       document.head.appendChild(dynStyle);
