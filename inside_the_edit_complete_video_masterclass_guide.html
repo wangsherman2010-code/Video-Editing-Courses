@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inside The Edit — Complete Video Masterclass Guide</title>
+  <!-- Restore last saved brightness mode before first paint -->
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('ite-guide-theme');
+        if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        // Default to dark mode if localStorage is blocked
+      }
+    })();
+  </script>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Theme Palette: #29465B Dark Blue-Gray Base + #D18B5D Terracotta-Amber Highlight */
+    :root {
+      --bg: #EFF3F6;
+      --surface: #FFFFFF;
+      --surface-elevated: #F5F8FA;
+      --header-bg: #29465B;
+      --header-surface: #1F3748;
+      --header-border: rgba(255, 255, 255, 0.14);
+      --border: #D4DEE6;
+      --text-primary: #142430;
+      --text-secondary: #485E70;
+      --accent: #D18B5D;
+      --accent-hover: #BA7446;
+      --accent-soft: rgba(209, 139, 93, 0.14);
+      --accent-border: rgba(209, 139, 93, 0.42);
+      --primary-slate: #29465B;
+    }
+
+    html.dark {
+      --bg: #14222D;
+      --surface: #1D3140;
+      --surface-elevated: #29465B;
+      --header-bg: #192B38;
+      --header-surface: #243E51;
+      --header-border: #365770;
+      --border: #335269;
+      --text-primary: #F2F6F9;
+      --text-secondary: #B2C4D2;
+      --accent: #D18B5D;
+      --accent-hover: #DE9E73;
+      --accent-soft: rgba(209, 139, 93, 0.18);
+      --accent-border: rgba(209, 139, 93, 0.45);
+      --primary-slate: #29465B;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .card-surface {
+      background-color: var(--surface);
+      border-color: var(--border);
+    }
+
+    .elevated-surface {
+      background-color: var(--surface-elevated);
+      border-color: var(--border);
+    }
+
+    .top-header {
+      background-color: var(--header-bg);
+      border-color: var(--header-border);
+      color: #F2F6F9;
+    }
+
+    .header-control {
+      background-color: var(--header-surface);
+      border-color: var(--header-border);
+      color: #F2F6F9;
+    }
+
+    .text-muted {
+      color: var(--text-secondary);
+    }
+
+    /* Smooth accordion height reveal */
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .accordion-content.open {
+      grid-template-rows: 1fr;
+    }
+
+    .accordion-inner {
+      overflow: hidden;
+    }
+
+    .chevron-icon {
+      transition: transform 0.25s ease;
+    }
+
+    .rotate-180-custom {
+      transform: rotate(180deg);
+    }
+
+    /* Active pill styling with #D18B5D highlight */
+    .pill-active {
+      background-color: #D18B5D !important;
+      color: #14222D !important;
+      border-color: #D18B5D !important;
+      font-weight: 700;
+    }
+
+    /* Simulated Phone Viewport Mode */
+    body.view-phone #appShell {
+      max-width: 430px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    body.view-phone .episode-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    body.view-phone .desktop-only-header {
+      display: none !important;
+    }
+
+    body.view-phone .mobile-header-bar {
+      display: flex !important;
+    }
+
+    body.view-phone .mobile-drawer-panel {
+      display: block;
+    }
+
+    /* Simulated PC Viewport Mode */
+    body.view-pc {
+      overflow-x: auto;
+    }
+
+    body.view-pc #appShell {
+      min-width: 1024px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    body.view-pc .episode-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    body.view-pc .desktop-only-header {
+      display: block !important;
+    }
+
+    body.view-pc .mobile-header-bar,
+    body.view-pc .mobile-drawer-panel {
+      display: none !important;
+    }
+
+    /* Custom subtle scrollbar for horizontal filter strip */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-[#D18B5D]/30">
+  <div id="appShell">
+    <!-- Sticky Top Header -->
+    <header class="sticky top-0 z-40 top-header border-b shadow-md backdrop-blur-md">
+      <!-- CONDENSED MOBILE HEADER BAR (<768px in Auto mode, or when Phone View is selected) -->
+      <div class="mobile-header-bar flex md:hidden items-center justify-between px-3.5 py-2.5 gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D18B5D] shrink-0"></span>
+          <span class="text-sm font-extrabold tracking-tight text-white truncate">Inside The Edit</span>
+          <span id="mobileActiveBadge" class="hidden text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#D18B5D]/20 text-[#D18B5D] border border-[#D18B5D]/40 truncate">
+            Filtered
+          </span>
+        </div>
+        <button
+          id="mobileMenuToggleBtn"
+          type="button"
+          aria-expanded="false"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold header-control border hover:border-[#D18B5D] transition"
+        >
+          <span id="mobileMenuLabel">Menu</span>
+          <svg id="mobileMenuChevron" class="w-3.5 h-3.5 text-[#D18B5D] transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- EXPANDABLE MOBILE DRAWER (Hidden by default on mobile; auto-closes on scroll down) -->
+      <div id="mobileDrawer" class="mobile-drawer-panel md:hidden accordion-content border-t border-white/10">
+        <div class="accordion-inner">
+          <div class="px-3.5 py-3 space-y-3 bg-[#192B38]/95">
+            <!-- Row 1: Viewport Mode + Theme Switch -->
+            <div class="flex items-center justify-between gap-2">
+              <div class="inline-flex rounded-lg p-0.5 header-control border text-[11px] font-semibold" role="group" aria-label="Layout Mode Mobile">
+                <button type="button" data-view="auto" class="view-btn pill-active px-2.5 py-1 rounded-md transition">Auto</button>
+                <button type="button" data-view="phone" class="view-btn px-2.5 py-1 rounded-md text-slate-200 transition">Phone</button>
+                <button type="button" data-view="pc" class="view-btn px-2.5 py-1 rounded-md text-slate-200 transition">PC</button>
+              </div>
+
+              <button
+                type="button"
+                class="theme-toggle-btn inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg header-control border text-xs font-medium hover:border-[#D18B5D] transition"
+                aria-label="Toggle Dark or Light Mode"
+              >
+                <svg class="w-3.5 h-3.5 text-[#D18B5D] hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                </svg>
+                <svg class="w-3.5 h-3.5 text-[#D18B5D] block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span class="dark:hidden">Dark</span>
+                <span class="hidden dark:inline">Light</span>
+              </button>
+            </div>
+
+            <!-- Row 2: Search Input -->
+            <div class="relative">
+              <svg class="w-4 h-4 text-slate-300 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search 18 lessons, techniques, or terms..."
+                class="search-input-field w-full pl-9 pr-8 py-2 rounded-xl header-control border text-xs text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-[#D18B5D]"
+              />
+              <button type="button" class="clear-search-btn hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-white text-xs font-bold px-1">
+                ✕
+              </button>
+            </div>
+
+            <!-- Row 3: Section Filter Pills -->
+            <div class="section-nav-pills flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5"></div>
+
+            <!-- Row 4: Expand / Collapse All -->
+            <div class="flex items-center gap-2 pt-0.5">
+              <button
+                type="button"
+                class="expand-all-btn flex-1 py-1.5 rounded-lg header-control border text-xs font-semibold hover:border-[#D18B5D] transition"
+              >
+                Expand All Cards
+              </button>
+              <button
+                type="button"
+                class="collapse-all-btn flex-1 py-1.5 rounded-lg header-control border text-xs font-semibold hover:border-[#D18B5D] transition"
+              >
+                Collapse All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESKTOP HEADER (>=768px in Auto mode, or when PC View is selected) -->
+      <div class="desktop-only-header hidden md:block max-w-6xl mx-auto px-5 py-4">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <span class="w-3 h-3 rounded-full bg-[#D18B5D]"></span>
+            <div>
+              <h1 class="text-xl font-extrabold tracking-tight text-white">Inside The Edit — Masterclass Guide</h1>
+              <p class="text-xs text-slate-300">18 Documentary & Narrative Editing Breakdowns Organized by Playlist</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <!-- Search -->
+            <div class="relative w-72">
+              <svg class="w-4 h-4 text-slate-300 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search lessons or techniques..."
+                class="search-input-field w-full pl-9 pr-8 py-1.5 rounded-xl header-control border text-xs text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-[#D18B5D]"
+              />
+              <button type="button" class="clear-search-btn hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-white text-xs font-bold px-1">
+                ✕
+              </button>
+            </div>
+
+            <!-- Auto / Phone / PC Switch -->
+            <div class="inline-flex rounded-xl p-0.5 header-control border text-xs font-semibold" role="group" aria-label="Layout Mode Desktop">
+              <button type="button" data-view="auto" class="view-btn pill-active px-2.5 py-1 rounded-lg transition">Auto</button>
+              <button type="button" data-view="phone" class="view-btn px-2.5 py-1 rounded-lg text-slate-200 hover:text-white transition">Phone</button>
+              <button type="button" data-view="pc" class="view-btn px-2.5 py-1 rounded-lg text-slate-200 hover:text-white transition">PC</button>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button
+              type="button"
+              class="theme-toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl header-control border text-xs font-semibold hover:border-[#D18B5D] transition"
+              aria-label="Toggle Dark or Light Mode"
+            >
+              <svg class="w-4 h-4 text-[#D18B5D] hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+              </svg>
+              <svg class="w-4 h-4 text-[#D18B5D] block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+              <span class="dark:hidden">Dark Mode</span>
+              <span class="hidden dark:inline">Light Mode</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Section Filter Pills + Expand/Collapse -->
+        <div class="flex items-center justify-between gap-4 mt-3 pt-2.5 border-t border-white/10">
+          <div class="section-nav-pills flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              class="expand-all-btn px-3 py-1 rounded-lg header-control border text-xs font-semibold hover:border-[#D18B5D] transition"
+            >
+              Expand All
+            </button>
+            <button
+              type="button"
+              class="collapse-all-btn px-3 py-1 rounded-lg header-control border text-xs font-semibold hover:border-[#D18B5D] transition"
+            >
+              Collapse All
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-3.5 sm:px-5 py-6 space-y-10">
+      <!-- Status / Count Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-muted">
+        <p id="resultsSummary">Showing all <strong class="text-[#D18B5D]">18</strong> episodes across <strong class="text-[#D18B5D]">4</strong> playlists</p>
+        <p class="hidden sm:block">Tip: Click any card to inspect its Thesis, Frameworks, and Mindset Shift.</p>
+      </div>
+
+      <!-- Sections Mount Point -->
+      <div id="sectionsContainer" class="space-y-10"></div>
+
+      <!-- Empty Search State -->
+      <div id="emptyState" class="hidden card-surface border rounded-2xl p-10 text-center space-y-3">
+        <p class="text-base font-bold">No matching episodes found</p>
+        <p class="text-xs text-muted max-w-md mx-auto">Try clearing your search term or switching back to "All Sections" to view all 18 episodes.</p>
+        <button id="resetFiltersBtn" type="button" class="px-4 py-2 rounded-xl bg-[#D18B5D] text-[#14222D] text-xs font-bold hover:bg-[#DE9E73] transition">
+          Reset Filters
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-4 py-8 border-t border-[var(--border)] text-center text-xs text-muted space-y-1">
+      <p class="font-semibold">Inside The Edit — Interactive Reference Guide</p>
+      <p>Compiled from Paddy Bird's editorial masterclasses · Built for fast desktop & mobile reference.</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification for Clipboard Copy -->
+  <div id="toastBanner" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl bg-[#29465B] text-white border border-[#D18B5D] text-xs font-semibold shadow-xl opacity-0 pointer-events-none transition-opacity duration-200">
+    Summary copied to clipboard!
+  </div>
+
+  <script>
+    // Complete dataset of all 18 summarized episodes organized by YouTube playlist sections
+    const PLAYLIST_SECTIONS = [
+      {
+        id: "watch-me-edit",
+        title: "Watch Me Edit",
+        subtitle: "Watch Me Edit is a series where Paddy breaks down real documentary scenes and rebuilds them in real time—diagnosing what isn't working and shaping a fine cut.",
+        episodes: [
+          {
+            num: 1,
+            title: "Watch Me Edit: Turning a Rough Cut Into a Documentary Scene",
+            duration: "57:25",
+            url: "http://www.youtube.com/watch?v=WOX-WdXSOOc",
+            thesis: "In observational documentary editing, real-life events unfold slowly with dead air, stutters, and camera adjustments. Compressing a bloated 4-minute rough assembly into a tight 1:58 scene requires hiding time jumps so events still feel like they happened in real time.",
+            techniques: [
+              {
+                label: "Gelling (Audio Underlay)",
+                time: "08:33",
+                text: "When a subject delivers a strong opening line while the camera operator is still hunting for focus or framing, strip out the shaky visuals and lay that clean dialogue underneath a stable establishing shot."
+              },
+              {
+                label: "Matching Action & Velocity",
+                time: "15:56",
+                text: "Hide time jumps when removing dead pockets of air by cutting on matching body movement—aligning a step, head turn, or camera lift velocity so the eye accepts the cut as continuous motion."
+              },
+              {
+                label: "The 'Can You See the Lips Move?' Cheat",
+                time: "30:19",
+                text: "Whenever a subject turns away from the lens, stands far in a wide shot, or is obscured behind gear, you gain an invisible window to swap or insert better-performing dialogue lines underneath."
+              },
+              {
+                label: "Let the Audience See Before the Subject Judges",
+                time: "47:46",
+                text: "When revealing a photo or result, insert a brief beat of clean room tone ('atmos') before the character reacts so the viewer registers the image first."
+              }
+            ],
+            mindset: "Tightening an observational scene is a delicate balancing act: strip out empty pockets of time that drag, yet preserve enough natural breathing space so the cut never feels claustrophobic, rushed, or fake."
+          },
+          {
+            num: 2,
+            title: "Watch Me Edit: Building a Cinematic Documentary Opening",
+            duration: "36:55",
+            url: "http://www.youtube.com/watch?v=gwyneGrX9Jw",
+            thesis: "Inexperienced editors ruin documentary openings by dumping facts, rapid 1.5-second cuts, and literal introductions ('Hi, my name's Dave...') onto the timeline. Great narrative openings withhold information and drip-feed clues to spark intrigue.",
+            techniques: [
+              {
+                label: "Start Poetic, Not Biographical",
+                time: "12:56",
+                text: "Cut literal resume introductions that make a film feel like a news report. Open instead with emotional resonance ('I've always been drawn to the sea... it's sanctuary for me') to hook the viewer first."
+              },
+              {
+                label: "Slow Down the Pictorial Arc (3–7s Shots)",
+                time: "06:29",
+                text: "Replace frantic YouTube-style cuts with patient 3-to-7-second shots using a symmetrical intercut pattern (closer sunrise → close-up of subject → wide seascape → wide shot of subject)."
+              },
+              {
+                label: "Drip-Feed Narrative Clues Before the Reveal",
+                time: "22:58",
+                text: "Hold back the defining shot of Dave's cliffside tent until the audience pieces together subtle visual clues—starting with coastal wildlife, then coffee mugs hanging from a tree, before revealing the tent."
+              },
+              {
+                label: "Let the Image Register Before Dialogue Confirms It",
+                time: "29:07",
+                text: "When cutting to the tent reveal, let the visual play in silence for a beat so the audience discovers the twist on their own before voiceover enters."
+              }
+            ],
+            mindset: "Audiences are addicted to mystery and discovery. Withholding key facts and delaying points of revelation transforms flat exposition into cinema."
+          }
+        ]
+      },
+      {
+        id: "edit-essays",
+        title: "Edit Essays",
+        subtitle: "Focused lessons exploring storytelling, structure, pacing, and emotional rhythm inside the cutting room.",
+        episodes: [
+          {
+            num: 3,
+            title: "Why Your Edits Don't Feel Right (And How to Fix It)",
+            duration: "19:40",
+            url: "https://www.youtube.com/watch?v=02J2xB59h7M",
+            thesis: "Editors often obsess over technical transitions and cutting on the beat while missing the deeper emotional pulse of a sequence. A scene feels 'right' when every cut is motivated by internal psychological shifts rather than external visual mechanics.",
+            techniques: [
+              {
+                label: "Emotional Motivation Over Mechanical Cutting",
+                time: "04:15",
+                text: "Never cut simply because a shot has lasted three seconds or because a drum hit landed. Cut when a character's thought changes or when the audience needs a new emotional perspective."
+              },
+              {
+                label: "Pacing as an Emotional Thermometer",
+                time: "09:50",
+                text: "Match cutting speed to internal tension: linger on faces during vulnerability and tighten cuts only when urgency genuinely escalates."
+              },
+              {
+                label: "Checking the 'Eye Trace' & Continuity of Feeling",
+                time: "14:20",
+                text: "Evaluate transitions by asking whether the emotional tone carries smoothly across the splice rather than jolting the viewer out of the story."
+              }
+            ],
+            mindset: "Software tools organize clips, but human empathy dictates timing. If a cut doesn't serve a feeling or a thought, it doesn't belong on the timeline."
+          },
+          {
+            num: 4,
+            title: "How Pacing Controls Emotion in Editing",
+            duration: "13:57",
+            url: "https://www.youtube.com/watch?v=9xJ8p3kL2mQ",
+            thesis: "Pacing is not simply 'cutting fast' or 'cutting slow'—it is the deliberate modulation of shot duration and dialogue density to control how much time the audience has to feel and process information.",
+            techniques: [
+              {
+                label: "Contrast Creates Rhythm",
+                time: "03:12",
+                text: "Fast cutting only feels exciting when contrasted against slower, breathing passages. Uniform speed—whether fast or slow—numbs the audience."
+              },
+              {
+                label: "Holding on Reactions for Emotional Weight",
+                time: "07:45",
+                text: "Staying on a character after they finish speaking forces the viewer to sit inside the subtext and unspoken emotion of the moment."
+              },
+              {
+                label: "Accelerating Through Action, Decelerating for Meaning",
+                time: "10:30",
+                text: "Compress logistical setup quickly, then slow down dramatically when the scene arrives at its emotional core."
+              }
+            ],
+            mindset: "You control the audience's heartbeat through duration. Give viewers time to absorb profound moments, or you rob the scene of its emotional payoff."
+          },
+          {
+            num: 5,
+            title: "How to Edit Unscripted Dialogue: The 3-Stage Process",
+            duration: "13:38",
+            url: "https://www.youtube.com/watch?v=4vN8m2kP9wR",
+            thesis: "Raw documentary interviews are full of tangents, stumbles, and circular phrasing. Transforming unscripted speech into compelling narrative requires a disciplined three-stage editorial pass before touching B-roll.",
+            techniques: [
+              {
+                label: "Stage 1: Radio Edit (Story Spine First)",
+                time: "02:40",
+                text: "Select and sequence the strongest narrative beats purely for meaning, structure, and beginning-middle-end progression without worrying about visual jump cuts."
+              },
+              {
+                label: "Stage 2: Performance Sculpting",
+                time: "06:15",
+                text: "Trim verbal crutches ('um', 'you know'), tighten sluggish pauses, and reshape cadence so the speaker sounds articulate and confident."
+              },
+              {
+                label: "Stage 3: Breathing Room & B-Roll Integration",
+                time: "10:05",
+                text: "Insert deliberate pauses between dense 'sync islands' and lay B-roll that expands—rather than merely repeats—what is being said."
+              }
+            ],
+            mindset: "Never hide weak storytelling behind pretty B-roll. If the audio-only 'radio cut' doesn't hold attention on its own, the scene isn't ready for pictures."
+          },
+          {
+            num: 6,
+            title: "Why Your Scenes Don't Work (The One Question Most Editors Never Ask)",
+            duration: "13:45",
+            url: "https://www.youtube.com/watch?v=7mK2p9vL4xS",
+            thesis: "Most failing scenes suffer from a lack of singular narrative focus. Before making a single cut, a professional editor asks: 'What is this specific scene actually about in one sentence?'",
+            techniques: [
+              {
+                label: "Define the Scene's Single Dramatic Purpose",
+                time: "02:55",
+                text: "Every scene must advance plot, reveal character, or shift an emotional dynamic. Cut any line or shot—no matter how beautiful—that doesn't serve that core purpose."
+              },
+              {
+                label: "Cut the 'Warm-Up' & 'Cool-Down'",
+                time: "07:10",
+                text: "Enter scenes as late as possible and exit as early as possible once the scene's central point has landed."
+              },
+              {
+                label: "Audit Every Clip Against the Core Question",
+                time: "10:48",
+                text: "When a sequence drags, review each block against your one-sentence premise and ruthlessly remove tangential exposition."
+              }
+            ],
+            mindset: "Clarity precedes creativity. When you know the exact emotional job a scene must perform, every trimming decision becomes obvious."
+          },
+          {
+            num: 7,
+            title: "7 Ways to Avoid Repetitive Editing",
+            duration: "16:01",
+            url: "https://www.youtube.com/watch?v=2pL9vX4mK8w",
+            thesis: "Audiences subconsciously tune out when an edit falls into predictable mechanical loops—such as alternating wide-medium-close in exact cycles or always cutting on the exact same beat.",
+            techniques: [
+              {
+                label: "Vary Shot Scale & Angle Intentionally",
+                time: "02:30",
+                text: "Avoid robotic shot-size ladders. Jump from a wide establishing frame straight to an extreme detail when narrative surprise calls for it."
+              },
+              {
+                label: "Break Rhythmic Predictability",
+                time: "06:20",
+                text: "Mix short 1.5-second observational glimpses with lingering 6-second takes so the viewer never anticipates the next splice."
+              },
+              {
+                label: "Alternate Audio-Led & Visual-Led Cuts (J & L Cuts)",
+                time: "10:15",
+                text: "Use pre-lapping sound (J-cuts) to pull viewers forward into new locations, and trailing audio (L-cuts) to linger on visual reactions."
+              },
+              {
+                label: "Avoid Literal 'See-Say' Matching",
+                time: "13:40",
+                text: "Don't cut to an image of a clock every time someone mentions time—pair dialogue with metaphorical or contrasting visuals."
+              }
+            ],
+            mindset: "Predictability kills engagement. Keep the viewer subtly off-balance by varying rhythm, perspective, and the relationship between sound and image."
+          },
+          {
+            num: 8,
+            title: "How to Start a Scene in Film Editing",
+            duration: "15:34",
+            url: "https://www.youtube.com/watch?v=8wK4mP2vL9x",
+            thesis: "The first five seconds of a scene establish geography, tone, and narrative momentum. Starting directly on talking heads or throat-clearing dialogue wastes your strongest hook.",
+            techniques: [
+              {
+                label: "Sound-First Atmosphere Entry",
+                time: "02:20",
+                text: "Bring in environmental sound design or ambient room tone a beat before the picture cuts to immerse the viewer immediately."
+              },
+              {
+                label: "Visual Intrigue Before Exposition",
+                time: "05:45",
+                text: "Open with an evocative detail, movement, or revealing camera motion that sparks a question before any character speaks."
+              },
+              {
+                label: "In Media Res (Start Inside the Action)",
+                time: "10:12",
+                text: "Skip characters walking through doors or sitting down—cut directly into the middle of the meaningful moment."
+              }
+            ],
+            mindset: "Treat every scene opening like a mini-movie trailer: earn the audience's curiosity in the first three seconds before delivering information."
+          },
+          {
+            num: 9,
+            title: "The Secret Art of Using Silence in Film Editing",
+            duration: "14:18",
+            url: "https://www.youtube.com/watch?v=5nL8p2kM9vQ",
+            thesis: "Constant wall-to-wall music and non-stop dialogue flatten emotional peaks. Strategic silence—built from subtle room tone and natural atmos—creates tension, intimacy, and dramatic punctuation.",
+            techniques: [
+              {
+                label: "Dropping Music Right Before a Crucial Line",
+                time: "03:40",
+                text: "Pulling out the score just before a confession or turning point strips away safety nets and makes every word land with raw weight."
+              },
+              {
+                label: "Active Silence vs. Dead Air",
+                time: "08:05",
+                text: "True cinematic silence is never a digital mute—layer subtle wind, distant traffic, or breathing so the world feels alive."
+              },
+              {
+                label: "Post-Climax Resonance",
+                time: "11:30",
+                text: "Hold a silent beat after an emotional peak so the audience can digest what just happened before moving to the next scene."
+              }
+            ],
+            mindset: "Music tells the audience what to feel; silence invites them to feel it for themselves."
+          },
+          {
+            num: 10,
+            title: "Why Music Is Ruining Your Edits (And How to Fix It)",
+            duration: "16:42",
+            url: "https://www.youtube.com/watch?v=6pM9kL2vN4w",
+            thesis: "Using music as a crutch to prop up weak structure or slapping an unaltered track from start to finish creates tonal confusion and buries dialogue.",
+            techniques: [
+              {
+                label: "Cut the Scene Without Music First",
+                time: "02:50",
+                text: "Verify that your pacing, dialogue rhythm, and visual storytelling work completely dry before auditioning a single music cue."
+              },
+              {
+                label: "Duet Theory (Dialogue & Score Take Turns)",
+                time: "07:35",
+                text: "Carve breathing spaces between dialogue blocks so melodic swells and instrumental flourishes play in open gaps rather than competing with speech."
+              },
+              {
+                label: "Edit the Track to Match Story Beats",
+                time: "12:15",
+                text: "Loop intros, cut on musical bars (4s and 8s), and time percussion entrances to exact narrative turning points."
+              }
+            ],
+            mindset: "A film score should behave like a scene partner in a duet—stepping forward when words stop and stepping back when the character speaks."
+          },
+          {
+            num: 11,
+            title: "How Pro Editors Create Tension & Suspense",
+            duration: "15:10",
+            url: "https://www.youtube.com/watch?v=3kL9mP4vN8x",
+            thesis: "Tension lives in the gap between expectation and outcome. Editors manufacture suspense by controlling what the audience knows, stretching time before a reveal, and unsettling sound design.",
+            techniques: [
+              {
+                label: "Dramatic Irony Through Cross-Cutting",
+                time: "03:25",
+                text: "Intercut between two converging elements so the audience anticipates a collision or discovery before the character does."
+              },
+              {
+                label: "Stretching Time Before the Payoff",
+                time: "07:50",
+                text: "Insert lingering close-ups, micro-pauses, and sensory details right before a critical moment to heighten anticipation."
+              },
+              {
+                label: "Subtle Low-End Sound & Breath Focus",
+                time: "11:40",
+                text: "Isolate diegetic sounds—footsteps, ticking, shallow breathing—while stripping away comforting background noise."
+              }
+            ],
+            mindset: "Suspense isn't created by loud stingers—it's built by making the audience lean forward and wait for the inevitable."
+          },
+          {
+            num: 12,
+            title: "The 5 Cut Types Every Editor Must Master",
+            duration: "12:50",
+            url: "https://www.youtube.com/watch?v=9mP2vL8kN4x",
+            thesis: "Every splice communicates a specific spatial or temporal relationship. Knowing when to use hard cuts, J/L cuts, match cuts, jump cuts, and cutaways turns technical mechanics into visual grammar.",
+            techniques: [
+              {
+                label: "J-Cuts & L-Cuts (Audio Bridges)",
+                time: "02:15",
+                text: "Lead with incoming audio (J-cut) to motivate a visual transition, or let outgoing audio trail (L-cut) to capture a listener's reaction."
+              },
+              {
+                label: "Cutting on Action",
+                time: "05:10",
+                text: "Splice mid-movement so human visual momentum carries the eye seamlessly across a change in camera angle."
+              },
+              {
+                label: "Match Cuts & Cutaways",
+                time: "08:30",
+                text: "Use compositional or motion parallels (match cuts) to link ideas, and strategic cutaways to compress time or hide dialogue edits."
+              }
+            ],
+            mindset: "An invisible cut is rarely accidental—it happens when your splice aligns with where the viewer's eye and curiosity are already moving."
+          },
+          {
+            num: 13,
+            title: "How to Know When Your Edit Is Finished",
+            duration: "14:05",
+            url: "https://www.youtube.com/watch?v=1vN8kP2mL9x",
+            thesis: "Over-editing ruins as many scenes as under-editing. Recognizing when a sequence has reached emotional clarity—and resisting the urge to tinker endlessly—is a hallmark of seasoned editors.",
+            techniques: [
+              {
+                label: "The 'Fresh Eyes' Full-Screen Watch",
+                time: "03:10",
+                text: "Watch the entire sequence from start to finish without pausing or looking at the timeline waveforms; mark only moments where your attention wanders."
+              },
+              {
+                label: "Check Clarity, Rhythm, and Emotional Peak",
+                time: "07:45",
+                text: "Confirm that a first-time viewer can follow every story beat effortlessly, feel the intended shift, and exit on a resonant final image."
+              },
+              {
+                label: "Stop Polishing Once Further Tweaks Only Make It Different",
+                time: "11:20",
+                text: "Distinguish between edits that genuinely solve a story problem versus lateral changes driven by timeline fatigue."
+              }
+            ],
+            mindset: "A scene is finished not when there is nothing left to add, but when every remaining frame earns its place and nothing distracts from the story."
+          }
+        ]
+      },
+      {
+        id: "scene-evolutions",
+        title: "Scene Evolutions",
+        subtitle: "Follow the evolution of a documentary scene through the editing process—from early dialogue assemblies through structure, pacing, B-roll, and music.",
+        episodes: [
+          {
+            num: 14,
+            title: "How Pro Editors Fix Messy Interview Dialogue",
+            duration: "21:40",
+            url: "http://www.youtube.com/watch?v=urCAMKTsc6o",
+            thesis: "Unscripted contributors aren't actors—they naturally stumble, insert verbal crutches ('you know', 'um'), and pause erratically while thinking. Sculpting messy interview speech must happen before touching a single frame of B-roll.",
+            techniques: [
+              {
+                label: "Diagnose Unscripted Speech Flaws",
+                time: "03:44",
+                text: "Identify false starts, repeated micro-phrases ('and the, and the'), 'machine-gun' erratic cadence, and multiple redundant endings."
+              },
+              {
+                label: "Pass 1: Low-Hanging Fruit Cleanup",
+                time: "10:10",
+                text: "Strip out the most obvious tangents, stumbles, and false starts quickly to create momentum and reveal the core narrative arc."
+              },
+              {
+                label: "Pass 2: Magnifying-Glass Fine-Tune",
+                time: "11:49",
+                text: "Polish micro-pauses, remove remaining filler words ('you know' repeated 12+ times), and smooth vocal rhythm so the speaker sounds articulate."
+              },
+              {
+                label: "Reinforce with On-Location Sync",
+                time: "13:34",
+                text: "Lock the studio interview cut first, then weave live on-location soundbites ('actuality sync') around it before adding score."
+              }
+            ],
+            mindset: "Learning editing software is less than 1% of the craft—every unscripted interview has unique performance flaws, so mastering the invisible art of sculpting human speech is what makes you employable."
+          },
+          {
+            num: 15,
+            title: "How Pro Editors Build a Scene That Actually Works",
+            duration: "33:05",
+            url: "http://www.youtube.com/watch?v=5G2wGolpXxE",
+            thesis: "Scenes never arrive fully formed—they evolve through hundreds of refinements. Even a non-linear 'beauty scene' needs a structured three-part dialogue skeleton before selecting intentional B-roll and scoring.",
+            techniques: [
+              {
+                label: "Find the 'Golden Mix' in Raw Sync",
+                time: "08:17",
+                text: "Combine logical description of what the subject does, concrete craft detail, and emotional language about how it feels."
+              },
+              {
+                label: "Build a 3-Part Dialogue Skeleton",
+                time: "12:15",
+                text: "Organize cleaned lines into (1) Premise, (2) Emotional Childhood Origin, and (3) Technical Process ending on a crisp summarizing line."
+              },
+              {
+                label: "Pre-Define B-Roll Tone & 'Tell Me, Then Show Me'",
+                time: "18:34",
+                text: "Select static, symmetrical beauty shots over wobbly handheld footage, and cut to a tight close-up right when the speaker enters an emotional memory."
+              },
+              {
+                label: "Apply Duet Theory in Scoring",
+                time: "31:02",
+                text: "Carve open gaps between dialogue blocks so musical flourishes shine in the spaces rather than getting buried beneath speech."
+              }
+            ],
+            mindset: "Expect your first assembly to feel disjointed and rough—great scenes are built progressively by locking the dialogue skeleton first, matching intentional B-roll second, and weaving in musical space last."
+          },
+          {
+            num: 16,
+            title: "How a Documentary Scene Is Built",
+            duration: "34:10",
+            url: "http://www.youtube.com/watch?v=xZnHgyeZlsU",
+            thesis: "In this multi-stage evolution from Cities at Dawn, building an emotional character-motivation sequence relies on dividing dialogue into color-coded 'sync islands', framing solitude through wide symmetry, and cutting two musical options.",
+            techniques: [
+              {
+                label: "Divide Dialogue into Color-Coded 'Sync Islands'",
+                time: "07:47",
+                text: "Group cleaned lines into distinct narrative blocks—each serving one clear step from opening question to emotional climax ('beauty heals')."
+              },
+              {
+                label: "The Third Purpose of B-Roll: Breathing Space",
+                time: "16:57",
+                text: "Beyond illustrating words and hiding jump cuts, B-roll creates essential silence between sync islands so the audience can process emotional lines."
+              },
+              {
+                label: "Frame Solitude with Wide Symmetry & Visual Bookends",
+                time: "12:19",
+                text: "Use wide symmetrical cityscapes with a tiny figure to convey isolation, reserve one profile close-up for inner emotion, and bookend with walking toward/away from camera."
+              },
+              {
+                label: "Edit Music Mathematically & Offer Two Versions",
+                time: "26:23",
+                text: "Loop intros on 4/8-bar phrasing, cut to black on a beat, and present directors with two contrasting scores (e.g., beat-driven vs. melancholic strings)."
+              }
+            ],
+            mindset: "Unscripted speakers rarely realize when they've said something profound—it is the editor's job to pause after emotional lines, give the viewer space to absorb them, and shape the score around that feeling."
+          }
+        ]
+      },
+      {
+        id: "edit-definitions",
+        title: "Edit Definitions",
+        subtitle: "Clear, concise breakdowns of core creative film editing concepts and how professional editors actually deploy them.",
+        episodes: [
+          {
+            num: 17,
+            title: "How Pro Editors Use Jump Cuts",
+            duration: "11:50",
+            url: "https://www.youtube.com/watch?v=4kL9mP2vN8w",
+            thesis: "Once considered a continuity mistake, the jump cut is a deliberate rhythmic tool used to compress dead time, inject nervous energy, or signal psychological fragmentation when executed with clear intent.",
+            techniques: [
+              {
+                label: "Rhythmic Time Compression",
+                time: "02:45",
+                text: "Remove pauses inside a continuous action or speech to accelerate momentum while keeping visual energy raw and immediate."
+              },
+              {
+                label: "Intentional Jump Cut vs. Sloppy Continuity Error",
+                time: "06:10",
+                text: "A deliberate jump cut has a clear rhythmic interval or noticeable framing shift; an accidental two-frame twitch just looks like a mistake."
+              },
+              {
+                label: "Conveying Anxiety or Passage of Time",
+                time: "09:05",
+                text: "Use repeated jump cuts on a static frame to show restlessness, waiting, or obsessive thought patterns."
+              }
+            ],
+            mindset: "Rules in editing exist to protect clarity—once you understand why seamless continuity works, breaking it with a jump cut becomes an expressive stylistic choice."
+          },
+          {
+            num: 18,
+            title: "How Pro Editors Use B-Roll",
+            duration: "09:52",
+            url: "https://www.youtube.com/watch?v=7pM2kL9vN4x",
+            thesis: "B-roll is never mere 'wallpaper' used to cover interview cuts. In high-end storytelling, cutaway shots carry subtext, establish atmosphere, and pace dialogue delivery.",
+            techniques: [
+              {
+                label: "Subtext Over Literal 'See-Say' Illustration",
+                time: "02:20",
+                text: "Instead of showing the exact object a speaker names, cut to an image that reveals the emotional consequence or environment behind their words."
+              },
+              {
+                label: "Creating Structural Pauses Between Dialogue",
+                time: "05:15",
+                text: "Hold on evocative B-roll for 4–6 seconds between interview thoughts to reset the audience's ear and prevent verbal fatigue."
+              },
+              {
+                label: "Building Mini Pictorial Arcs",
+                time: "07:40",
+                text: "Sequence B-roll clips with their own beginning, middle, and end (wide context → action detail → human reaction) rather than random single shots."
+              }
+            ],
+            mindset: "Never drop B-roll onto the timeline just to hide a jump cut—every cutaway must earn its screen time by adding new visual information or emotional space."
+          }
+        ]
+      }
+    ];
+
+    // Application State
+    let activeSectionFilter = "all";
+    let searchQuery = "";
+    let currentViewMode = "auto";
+
+    // DOM References
+    const sectionsContainer = document.getElementById("sectionsContainer");
+    const emptyState = document.getElementById("emptyState");
+    const resultsSummary = document.getElementById("resultsSummary");
+    const mobileDrawer = document.getElementById("mobileDrawer");
+    const mobileMenuToggleBtn = document.getElementById("mobileMenuToggleBtn");
+    const mobileMenuLabel = document.getElementById("mobileMenuLabel");
+    const mobileMenuChevron = document.getElementById("mobileMenuChevron");
+    const mobileActiveBadge = document.getElementById("mobileActiveBadge");
+    const toastBanner = document.getElementById("toastBanner");
+
+    // Helper: Escape HTML safely
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // Show subtle toast notification
+    let toastTimer = null;
+    function showToast(message) {
+      toastBanner.textContent = message;
+      toastBanner.classList.remove("opacity-0");
+      toastBanner.classList.add("opacity-100");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toastBanner.classList.remove("opacity-100");
+        toastBanner.classList.add("opacity-0");
+      }, 2200);
+    }
+
+    // Mobile Menu Drawer Open/Close Helpers
+    function setMobileDrawerOpen(isOpen) {
+      if (isOpen) {
+        mobileDrawer.classList.add("open");
+        mobileMenuToggleBtn.setAttribute("aria-expanded", "true");
+        mobileMenuLabel.textContent = "Close";
+        mobileMenuChevron.classList.add("rotate-180-custom");
+      } else {
+        mobileDrawer.classList.remove("open");
+        mobileMenuToggleBtn.setAttribute("aria-expanded", "false");
+        mobileMenuLabel.textContent = "Menu";
+        mobileMenuChevron.classList.remove("rotate-180-custom");
+      }
+    }
+
+    mobileMenuToggleBtn.addEventListener("click", () => {
+      const isCurrentlyOpen = mobileDrawer.classList.contains("open");
+      setMobileDrawerOpen(!isCurrentlyOpen);
+    });
+
+    // Auto-collapse mobile drawer when user scrolls down to read content
+    let lastScrollY = window.scrollY;
+    window.addEventListener(
+      "scroll",
+      () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY + 12 && mobileDrawer.classList.contains("open")) {
+          setMobileDrawerOpen(false);
+        }
+        lastScrollY = currentScrollY;
+      },
+      { passive: true }
+    );
+
+    // Update badge in slim mobile header when a filter or search is active
+    function updateMobileFilterBadge() {
+      const hasSection = activeSectionFilter !== "all";
+      const hasSearch = searchQuery.trim().length > 0;
+      if (hasSection || hasSearch) {
+        const secObj = PLAYLIST_SECTIONS.find((s) => s.id === activeSectionFilter);
+        mobileActiveBadge.textContent = hasSection ? secObj.title : `"${searchQuery.trim()}"`;
+        mobileActiveBadge.classList.remove("hidden");
+      } else {
+        mobileActiveBadge.classList.add("hidden");
+      }
+    }
+
+    // Render Section Filter Pills in both Mobile Drawer and Desktop Header
+    function renderSectionNavPills() {
+      const containers = document.querySelectorAll(".section-nav-pills");
+      const totalCount = PLAYLIST_SECTIONS.reduce((acc, s) => acc + s.episodes.length, 0);
+
+      containers.forEach((container) => {
+        const pillsHTML = [
+          `<button type="button" data-section="all" class="section-pill ${
+            activeSectionFilter === "all" ? "pill-active" : "header-control text-slate-200 hover:border-[#D18B5D]"
+          } shrink-0 px-3 py-1 rounded-full border text-xs font-semibold transition">All (${totalCount})</button>`,
+          ...PLAYLIST_SECTIONS.map((sec) => {
+            const isActive = activeSectionFilter === sec.id;
+            return `<button type="button" data-section="${sec.id}" class="section-pill ${
+              isActive ? "pill-active" : "header-control text-slate-200 hover:border-[#D18B5D]"
+            } shrink-0 px-3 py-1 rounded-full border text-xs font-semibold transition">${escapeHTML(sec.title)} (${
+              sec.episodes.length
+            })</button>`;
+          }),
+        ].join("");
+
+        container.innerHTML = pillsHTML;
+      });
+
+      document.querySelectorAll(".section-pill").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          activeSectionFilter = btn.getAttribute("data-section");
+          renderSectionNavPills();
+          renderSections();
+          updateMobileFilterBadge();
+          setMobileDrawerOpen(false);
+        });
+      });
+    }
+
+    // Build HTML for a single Episode Card
+    function buildEpisodeCardHTML(ep, sectionTitle) {
+      const techniquesHTML = ep.techniques
+        .map(
+          (t) => `
+          <li class="p-3 rounded-xl elevated-surface border space-y-1">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-bold text-[var(--text-primary)]">${escapeHTML(t.label)}</span>
+              <span class="shrink-0 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#D18B5D]/20 text-[#D18B5D] border border-[#D18B5D]/40">${escapeHTML(
+                t.time
+              )}</span>
+            </div>
+            <p class="text-xs text-muted leading-relaxed">${escapeHTML(t.text)}</p>
+          </li>`
+        )
+        .join("");
+
+      return `
+        <article class="episode-card card-surface border rounded-2xl overflow-hidden shadow-sm hover:border-[#D18B5D]/70 transition-colors flex flex-col" data-ep-num="${
+          ep.num
+        }">
+          <!-- Card Header (Always Visible; Click to Toggle Body) -->
+          <div class="card-header-toggle p-4 sm:p-5 cursor-pointer select-none flex items-start justify-between gap-3">
+            <div class="flex items-start gap-3 min-w-0">
+              <span class="shrink-0 w-7 h-7 rounded-lg bg-[#D18B5D] text-[#14222D] text-xs font-extrabold flex items-center justify-center mt-0.5">
+                ${ep.num}
+              </span>
+              <div class="min-w-0 space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-[11px] font-semibold uppercase tracking-wider text-[#D18B5D]">${escapeHTML(sectionTitle)}</span>
+                  <span class="text-[11px] font-mono px-2 py-0.5 rounded-md elevated-surface border text-muted">${escapeHTML(
+                    ep.duration
+                  )}</span>
+                </div>
+                <h3 class="text-sm sm:text-base font-bold leading-snug text-[var(--text-primary)]">${escapeHTML(ep.title)}</h3>
+              </div>
+            </div>
+            <button type="button" aria-label="Toggle Episode Details" class="shrink-0 p-1.5 rounded-lg elevated-surface border text-muted hover:text-[#D18B5D] transition">
+              <svg class="card-chevron chevron-icon w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Expandable Body -->
+          <div class="card-body accordion-content">
+            <div class="accordion-inner">
+              <div class="px-4 sm:px-5 pb-5 pt-1 space-y-4 border-t border-[var(--border)]">
+                <!-- Layer 1: Core Thesis -->
+                <div class="space-y-1.5 pt-3">
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-[#D18B5D]">Layer 1 · Core Thesis</div>
+                  <p class="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">${escapeHTML(ep.thesis)}</p>
+                </div>
+
+                <!-- Layer 2: Key Techniques Accordion -->
+                <div class="rounded-xl border border-[var(--border)] overflow-hidden">
+                  <button type="button" class="sub-accordion-btn w-full px-3.5 py-2.5 elevated-surface flex items-center justify-between text-left text-xs font-bold hover:text-[#D18B5D] transition">
+                    <span>Layer 2 · Key Techniques & Timeline Moves (${ep.techniques.length})</span>
+                    <svg class="sub-chevron chevron-icon w-3.5 h-3.5 text-[#D18B5D]" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <div class="sub-accordion-content accordion-content open">
+                    <div class="accordion-inner">
+                      <ul class="p-3 space-y-2.5 bg-[var(--surface)]">${techniquesHTML}</ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Layer 3: Mindset Shift Callout -->
+                <div class="p-3.5 rounded-xl bg-[#D18B5D]/12 border-l-4 border-[#D18B5D] space-y-1">
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-[#D18B5D]">Layer 3 · Core Mindset Shift</div>
+                  <p class="text-xs text-[var(--text-primary)] leading-relaxed font-medium">${escapeHTML(ep.mindset)}</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                  <a
+                    href="${escapeHTML(ep.url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#D18B5D] hover:bg-[#DE9E73] text-[#14222D] text-xs font-bold transition shadow-sm"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    <span>Watch on YouTube</span>
+                  </a>
+                  <button
+                    type="button"
+                    class="copy-summary-btn inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl elevated-surface border text-xs font-semibold hover:border-[#D18B5D] transition"
+                    data-ep-num="${ep.num}"
+                  >
+                    <svg class="w-3.5 h-3.5 text-[#D18B5D]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy Notes</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    // Render Filtered Sections & Episodes
+    function renderSections() {
+      const query = searchQuery.trim().toLowerCase();
+      let visibleEpisodesCount = 0;
+      let visibleSectionsCount = 0;
+
+      const sectionsHTML = PLAYLIST_SECTIONS.filter(
+        (sec) => activeSectionFilter === "all" || sec.id === activeSectionFilter
+      )
+        .map((sec) => {
+          const matchingEpisodes = sec.episodes.filter((ep) => {
+            if (!query) return true;
+            const haystack = [
+              ep.title,
+              ep.thesis,
+              ep.mindset,
+              sec.title,
+              ...ep.techniques.map((t) => `${t.label} ${t.text}`),
+            ]
+              .join(" ")
+              .toLowerCase();
+            return haystack.includes(query);
+          });
+
+          if (matchingEpisodes.length === 0) return "";
+
+          visibleSectionsCount += 1;
+          visibleEpisodesCount += matchingEpisodes.length;
+
+          const cardsHTML = matchingEpisodes.map((ep) => buildEpisodeCardHTML(ep, sec.title)).join("");
+
+          return `
+            <section id="section-${sec.id}" class="space-y-4">
+              <div class="border-l-4 border-[#D18B5D] pl-3.5 py-0.5 space-y-1">
+                <div class="flex items-center gap-2.5">
+                  <h2 class="text-lg sm:text-xl font-extrabold tracking-tight text-[var(--text-primary)]">${escapeHTML(
+                    sec.title
+                  )}</h2>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#D18B5D]/20 text-[#D18B5D] border border-[#D18B5D]/40">
+                    ${matchingEpisodes.length} ${matchingEpisodes.length === 1 ? "video" : "videos"}
+                  </span>
+                </div>
+                <p class="text-xs sm:text-sm text-muted max-w-3xl leading-relaxed">${escapeHTML(sec.subtitle)}</p>
+              </div>
+
+              <div class="episode-grid grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+                ${cardsHTML}
+              </div>
+            </section>
+          `;
+        })
+        .join("");
+
+      sectionsContainer.innerHTML = sectionsHTML;
+
+      // Update status summary & empty state
+      if (visibleEpisodesCount === 0) {
+        emptyState.classList.remove("hidden");
+        resultsSummary.innerHTML = `No matching episodes found`;
+      } else {
+        emptyState.classList.add("hidden");
+        resultsSummary.innerHTML = `Showing <strong class="text-[#D18B5D]">${visibleEpisodesCount}</strong> of 18 episodes across <strong class="text-[#D18B5D]">${visibleSectionsCount}</strong> ${
+          visibleSectionsCount === 1 ? "playlist" : "playlists"
+        }`;
+      }
+
+      attachCardListeners();
+    }
+
+    // Attach Interactive Listeners to Rendered Cards
+    function attachCardListeners() {
+      // Main card expand/collapse
+      document.querySelectorAll(".card-header-toggle").forEach((header) => {
+        header.addEventListener("click", () => {
+          const card = header.closest(".episode-card");
+          const body = card.querySelector(".card-body");
+          const chevron = card.querySelector(".card-chevron");
+          const isOpen = body.classList.toggle("open");
+          chevron.classList.toggle("rotate-180-custom", isOpen);
+        });
+      });
+
+      // Layer 2 nested accordion toggle
+      document.querySelectorAll(".sub-accordion-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const content = btn.nextElementSibling;
+          const chevron = btn.querySelector(".sub-chevron");
+          const isOpen = content.classList.toggle("open");
+          chevron.classList.toggle("rotate-180-custom", !isOpen);
+        });
+      });
+
+      // Copy summary notes using fallback-safe textarea selection
+      document.querySelectorAll(".copy-summary-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const epNum = Number(btn.getAttribute("data-ep-num"));
+          let foundEp = null;
+          let foundSec = "";
+          for (const sec of PLAYLIST_SECTIONS) {
+            const match = sec.episodes.find((item) => item.num === epNum);
+            if (match) {
+              foundEp = match;
+              foundSec = sec.title;
+              break;
+            }
+          }
+          if (!foundEp) return;
+
+          const formatted = [
+            `${foundEp.title} (${foundSec} · ${foundEp.duration})`,
+            `Watch: ${foundEp.url}`,
+            ``,
+            `CORE THESIS: ${foundEp.thesis}`,
+            ``,
+            `KEY TECHNIQUES:`,
+            ...foundEp.techniques.map((t) => `• [${t.time}] ${t.label}: ${t.text}`),
+            ``,
+            `MINDSET SHIFT: ${foundEp.mindset}`,
+          ].join("\n");
+
+          const helperTextarea = document.createElement("textarea");
+          helperTextarea.value = formatted;
+          helperTextarea.setAttribute("readonly", "");
+          helperTextarea.style.position = "fixed";
+          helperTextarea.style.opacity = "0";
+          document.body.appendChild(helperTextarea);
+          helperTextarea.select();
+          try {
+            document.execCommand("copy");
+            showToast(`Copied notes for #${foundEp.num}: ${foundEp.title.slice(0, 34)}...`);
+          } catch (err) {
+            showToast("Unable to copy notes on this device.");
+          }
+          document.body.removeChild(helperTextarea);
+        });
+      });
+    }
+
+    // Sync Search Inputs across Mobile & Desktop
+    const searchInputs = document.querySelectorAll(".search-input-field");
+    const clearSearchBtns = document.querySelectorAll(".clear-search-btn");
+
+    searchInputs.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        searchInputs.forEach((other) => {
+          if (other !== input) other.value = searchQuery;
+        });
+        clearSearchBtns.forEach((btn) => {
+          btn.classList.toggle("hidden", searchQuery.length === 0);
+        });
+        renderSections();
+        updateMobileFilterBadge();
+      });
+    });
+
+    clearSearchBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        searchQuery = "";
+        searchInputs.forEach((inp) => (inp.value = ""));
+        clearSearchBtns.forEach((b) => b.classList.add("hidden"));
+        renderSections();
+        updateMobileFilterBadge();
+      });
+    });
+
+    // Reset Filters Button in Empty State
+    document.getElementById("resetFiltersBtn").addEventListener("click", () => {
+      activeSectionFilter = "all";
+      searchQuery = "";
+      searchInputs.forEach((inp) => (inp.value = ""));
+      clearSearchBtns.forEach((b) => b.classList.add("hidden"));
+      renderSectionNavPills();
+      renderSections();
+      updateMobileFilterBadge();
+    });
+
+    // Expand All / Collapse All Controls
+    document.querySelectorAll(".expand-all-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".card-body").forEach((b) => b.classList.add("open"));
+        document.querySelectorAll(".card-chevron").forEach((c) => c.classList.add("rotate-180-custom"));
+        setMobileDrawerOpen(false);
+      });
+    });
+
+    document.querySelectorAll(".collapse-all-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".card-body").forEach((b) => b.classList.remove("open"));
+        document.querySelectorAll(".card-chevron").forEach((c) => c.classList.remove("rotate-180-custom"));
+        setMobileDrawerOpen(false);
+      });
+    });
+
+    // Auto / Phone / PC View Mode Switcher
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      document.body.classList.remove("view-phone", "view-pc");
+      if (mode === "phone") {
+        document.body.classList.add("view-phone");
+      } else if (mode === "pc") {
+        document.body.classList.add("view-pc");
+      }
+
+      document.querySelectorAll(".view-btn").forEach((btn) => {
+        const isMatch = btn.getAttribute("data-view") === mode;
+        btn.classList.toggle("pill-active", isMatch);
+        if (!isMatch) {
+          btn.classList.add("text-slate-200");
+        } else {
+          btn.classList.remove("text-slate-200");
+        }
+      });
+
+      setMobileDrawerOpen(false);
+    }
+
+    document.querySelectorAll(".view-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setViewMode(btn.getAttribute("data-view"));
+      });
+    });
+
+    // Dark / Light Theme Toggle (Persists last brightness setting in localStorage)
+    document.querySelectorAll(".theme-toggle-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark");
+        try {
+          localStorage.setItem("ite-guide-theme", isDark ? "dark" : "light");
+        } catch (e) {
+          // Ignore storage restrictions
+        }
+      });
+    });
+
+    // Initial Render
+    renderSectionNavPills();
+    renderSections();
+    updateMobileFilterBadge();
+  </script>
+</body>
+</html>
