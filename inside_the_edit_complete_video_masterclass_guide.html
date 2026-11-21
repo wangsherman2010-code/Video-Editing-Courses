@@ -1556,22 +1556,32 @@
         dynStyle = document.createElement("style");
         dynStyle.id = "accent-dyn";
       }
-      // For white accent, pill text must stay dark so it's readable
-      const pillTextColor = (name === "white") ? "#29465B" : "#14222D";
+      // White accent: text must stay readable and backgrounds must stay visible
+      const isWhite = (name === "white");
+      const textAccent      = isWhite ? "var(--text-secondary)"          : "var(--accent)";
+      const borderAccent    = isWhite ? "rgba(130,130,130,0.40)"         : "var(--accent)";
+      const bgSoft20        = isWhite ? "rgba(130,130,130,0.10)"         : "rgba(var(--accent-rgb),0.20)";
+      const bgSoft12        = isWhite ? "rgba(130,130,130,0.07)"         : "rgba(var(--accent-rgb),0.12)";
+      const bgSoft30        = isWhite ? "rgba(130,130,130,0.15)"         : "rgba(var(--accent-rgb),0.30)";
+      const borderSoft      = isWhite ? "rgba(130,130,130,0.25)"         : "rgba(var(--accent-rgb),0.40)";
+      const pillTextColor   = isWhite ? "#29465B"                        : "#14222D";
+      // Number badge: white bg needs a visible outline so the circle doesn't disappear
+      const badgeOutline    = isWhite ? "outline:1.5px solid rgba(100,100,100,0.30);outline-offset:-1.5px;" : "";
+
       dynStyle.textContent = `
-        [class~="bg-[#D18B5D]"]             { background-color: var(--accent) !important; }
-        [class~="text-[#D18B5D]"]           { color: var(--accent) !important; }
-        [class~="border-[#D18B5D]"]         { border-color: var(--accent) !important; }
+        [class~="bg-[#D18B5D]"]             { background-color: var(--accent) !important; ${badgeOutline} }
+        [class~="text-[#D18B5D]"]           { color: ${textAccent} !important; }
+        [class~="border-[#D18B5D]"]         { border-color: ${borderAccent} !important; }
         [class~="hover:bg-[#DE9E73]"]:hover { background-color: var(--accent-hover) !important; }
-        [class~="hover:border-[#D18B5D]"]:hover { border-color: var(--accent) !important; }
+        [class~="hover:border-[#D18B5D]"]:hover { border-color: ${borderAccent} !important; }
         [class~="focus:ring-[#D18B5D]"]:focus   { --tw-ring-color: var(--accent) !important; }
-        [class~="bg-[#D18B5D]/20"]          { background-color: rgba(var(--accent-rgb),0.20) !important; }
-        [class~="bg-[#D18B5D]/12"]          { background-color: rgba(var(--accent-rgb),0.12) !important; }
-        [class~="bg-[#D18B5D]/30"]          { background-color: rgba(var(--accent-rgb),0.30) !important; }
-        [class~="border-[#D18B5D]/40"]      { border-color: rgba(var(--accent-rgb),0.40) !important; }
-        [class~="border-[#D18B5D]/45"]      { border-color: rgba(var(--accent-rgb),0.45) !important; }
-        [class~="selection:bg-[#D18B5D]/30"] *::selection { background-color: rgba(var(--accent-rgb),0.30) !important; }
-        .pill-active { background-color: var(--accent) !important; border-color: var(--accent) !important; color: ${pillTextColor} !important; }
+        [class~="bg-[#D18B5D]/20"]          { background-color: ${bgSoft20} !important; }
+        [class~="bg-[#D18B5D]/12"]          { background-color: ${bgSoft12} !important; }
+        [class~="bg-[#D18B5D]/30"]          { background-color: ${bgSoft30} !important; }
+        [class~="border-[#D18B5D]/40"]      { border-color: ${borderSoft} !important; }
+        [class~="border-[#D18B5D]/45"]      { border-color: ${borderSoft} !important; }
+        [class~="selection:bg-[#D18B5D]/30"] *::selection { background-color: ${bgSoft30} !important; }
+        .pill-active { background-color: var(--accent) !important; border-color: ${borderAccent} !important; color: ${pillTextColor} !important; }
       `;
       // Always append last so this style wins over any later Tailwind re-injections
       document.head.appendChild(dynStyle);
