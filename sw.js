@@ -1,4 +1,4 @@
-const CACHE = 'ite-guide-v5';
+const CACHE = 'ite-guide-v6';
 const PRECACHE = [
   './',
   './inside_the_edit_complete_video_masterclass_guide.html',

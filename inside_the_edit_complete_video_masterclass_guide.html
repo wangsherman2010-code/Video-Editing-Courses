@@ -1063,7 +1063,13 @@
 
     mobileMenuToggleBtn.addEventListener("click", () => {
       const isCurrentlyOpen = mobileDrawer.classList.contains("open");
-      setMobileDrawerOpen(!isCurrentlyOpen);
+      const willOpen = !isCurrentlyOpen;
+      setMobileDrawerOpen(willOpen);
+      // If opening while scrolled down, bring the header into view smoothly
+      // so the user can see and interact with the expanded menu.
+      if (willOpen && window.scrollY > 60) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     });
 
     // Auto-collapse mobile drawer when user scrolls down to read content
